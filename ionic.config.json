@@ -1,0 +1,7 @@
+{
+  "name": "FlexJob",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
