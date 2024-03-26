@@ -11,7 +11,7 @@ import { IonicModule } from '@ionic/angular';
 import { JobsService } from '../services/jobs.service';
 import { Job } from '../services/interfaces';
 import { addIcons } from 'ionicons';
-import { save } from 'ionicons/icons';
+import { save, caretBack } from 'ionicons/icons';
 
 @Component({
   selector: 'app-details',
@@ -32,6 +32,10 @@ export class DetailsPage {
   }
 
   constructor() {
-    addIcons({ save });
+    addIcons({ save, caretBack });
   }
+
+  // goBack() {
+  //   this.routerOutlet.pop();
+  // }
 }
