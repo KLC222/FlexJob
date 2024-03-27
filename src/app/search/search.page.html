@@ -1,15 +1,49 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Search </ion-title>
+    <ion-title> Job Search </ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      [debounce]="1000"
+      [ngModel]="searchInput()"
+      (ngModelChange)="searchInput.set($event)"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Search</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-item>
+    <!-- https://www.angulararchitects.io/en/blog/angular-signals-your-architecture-5-options/ -->
+    <ion-select
+      label="Location"
+      [interfaceOptions]="customPopoverOptions"
+      interface="popover"
+      placeholder="Select location"
+      [ngModel]="selectedLocation()"
+      (ngModelChange)="selectedLocation.set($event)"
+    >
+      @for (location of locations; track location.geoID) {
+      <ion-select-option value="{{location.geoSlug}}"
+        >{{location.geoName}}</ion-select-option
+      >
+      }
+    </ion-select>
+  </ion-item>
+  selected location: {{selectedLocation()}}
+  <ion-list>
+    @for (job of jobs; track job.id) {
+    <ion-item button [routerLink]="['/details', job.id]">
+      <!-- button [routerLink]=["'/details', job.id"] -->
+      <ion-thumbnail>
+        <img alt="Company logo" src="{{ job.companyLogo }}" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ job.jobTitle}}</h2>
+        <p>{{ job.companyName }}</p>
+      </ion-label>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+      <ion-badge slot="end"> {{ job.jobGeo}}</ion-badge>
+    </ion-item>
+    }
+  </ion-list>
 </ion-content>

@@ -12,11 +12,20 @@ import {
   IonLabel,
   IonBadge,
   IonButton,
+  IonCard,
+  IonIcon,
+  IonGrid,
+  IonCol,
+  IonFab,
+  IonFabButton,
+  IonRow,
 } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { JobsService } from '../services/jobs.service';
 import { Job } from '../services/interfaces';
 import { Router, RouterModule } from '@angular/router';
+import { addIcons } from 'ionicons';
+import { globeOutline, bookmarkOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +33,13 @@ import { Router, RouterModule } from '@angular/router';
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [
+    IonRow,
+    IonFabButton,
+    IonFab,
+    IonCol,
+    IonGrid,
+    IonIcon,
+    IonCard,
     IonBadge,
     IonLabel,
     IonItem,
@@ -49,13 +65,14 @@ export class HomePage {
 
   constructor(private router: Router) {
     this.loadLatestJobs();
+    addIcons({ globeOutline, bookmarkOutline });
   }
 
   loadLatestJobs() {
     // set isLoading to true
     this.isLoading = true;
 
-    this.jobsService.getLatestJobs().subscribe({
+    this.jobsService.getJobs({ tag: 'php' }).subscribe({
       // handle the response
       next: (jobs) => {
         this.isLoading = false;

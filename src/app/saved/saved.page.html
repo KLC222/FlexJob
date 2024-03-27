@@ -1,15 +1,23 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Tab 3 </ion-title>
+    <ion-title>Saved jobs</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-list>
+    @for (job of savedJobs; track job.id) {
+    <ion-item button [routerLink]="['/details', job.id]">
+      <ion-thumbnail>
+        <img alt="Company logo" src="{{ job.companyLogo }}" />
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ job.jobTitle }}</h2>
+        <p>{{ job.companyName }}</p>
+      </ion-label>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+      <ion-badge slot="end"> {{ job.jobGeo }}</ion-badge>
+    </ion-item>
+    }
+  </ion-list>
 </ion-content>

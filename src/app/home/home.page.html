@@ -7,18 +7,30 @@
 <ion-content>
   <ion-list>
     @for (job of jobs; track job.id) {
-    <ion-item button [routerLink]="['/details', job.id]">
-      <!-- button [routerLink]=["'/details', job.id"] -->
-      <ion-thumbnail>
-        <img alt="Company logo" src="{{ job.companyLogo }}" />
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{ job.jobTitle}}</h2>
-        <p>{{ job.companyName }}</p>
-      </ion-label>
 
-      <ion-badge slot="end"> {{ job.jobGeo}}</ion-badge>
-    </ion-item>
+    <ion-grid>
+      <ion-item button [routerLink]="['/details', job.id]">
+        <!-- button [routerLink]=["'/details', job.id"] -->
+        <ion-col size="3">
+          <ion-thumbnail>
+            <img alt="Company logo" src="{{ job.companyLogo }}" />
+          </ion-thumbnail>
+        </ion-col>
+        <ion-col size="9">
+          <ion-label>
+            <h2>{{ job.jobTitle}}</h2>
+
+            <p>{{ job.companyName }}</p>
+            <br />
+            <p>
+              <ion-icon name="globe-outline"></ion-icon
+              ><strong>{{job.jobGeo}}</strong>
+            </p>
+          </ion-label>
+        </ion-col>
+      </ion-item>
+    </ion-grid>
+
     }
   </ion-list>
 </ion-content>

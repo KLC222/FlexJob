@@ -11,7 +11,7 @@ import { IonicModule } from '@ionic/angular';
 import { JobsService } from '../services/jobs.service';
 import { Job } from '../services/interfaces';
 import { addIcons } from 'ionicons';
-import { save, caretBack } from 'ionicons/icons';
+import { save, caretBack, bookmarkOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-details',
@@ -32,10 +32,21 @@ export class DetailsPage {
   }
 
   constructor() {
-    addIcons({ save, caretBack });
+    addIcons({ save, caretBack, bookmarkOutline });
+  }
+
+  showFullDescription = false;
+
+  toggleDescription() {
+    this.showFullDescription = !this.showFullDescription;
   }
 
   // goBack() {
   //   this.routerOutlet.pop();
   // }
+
+  saveJob(job: Job) {
+    // add the job to the saved jobs
+    this.jobsService.saveJob(job);
+  }
 }
