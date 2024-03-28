@@ -1,4 +1,13 @@
 // https://transform.tools/json-to-typescript
+export interface IndustryResults {
+  industries: Industry[];
+}
+
+export interface Industry {
+  industryID: number;
+  industryName: string;
+  industrySlug: string;
+}
 
 export interface LocationResults {
   locations: Location[];

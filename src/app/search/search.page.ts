@@ -13,14 +13,19 @@ import {
   IonBadge,
   IonSelect,
   IonSelectOption,
+  IonCol,
+  IonGrid,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { JobsService } from '../services/jobs.service';
-import { Job, Location, JobSearch } from '../services/interfaces';
+import { Job, Location, JobSearch, Industry } from '../services/interfaces';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
+import { addIcons } from 'ionicons';
+import { globeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-search',
@@ -28,6 +33,8 @@ import { switchMap } from 'rxjs';
   styleUrls: ['search.page.scss'],
   standalone: true,
   imports: [
+    IonIcon,
+    IonCol,
     IonLabel,
     IonSearchbar,
     IonHeader,
@@ -44,38 +51,55 @@ import { switchMap } from 'rxjs';
     IonSelect,
     IonSelectOption,
     FormsModule,
+    IonGrid,
   ],
 })
 export class SearchPage {
+  // Job service for API calls
   private jobsService = inject(JobsService);
+  // Popover options
+  locationPopoverOptions = {
+    header: 'Location',
+    subHeader: 'Select location',
+  };
+  industryPopoverOptions = {
+    header: 'Industry',
+    subHeader: 'Select industry',
+  };
+  // Lists of jobs, locations, and industries
   public jobs: Array<Job> = [];
   public locations: Array<Location> = [];
+  public industries: Array<Industry> = [];
+  // Inputs for search
   public selectedLocation = signal<string>('');
+  public selectedIndustry = signal<string>('');
   public searchInput = signal<string>('');
   public jobSearch = computed(() => {
     const search: JobSearch = {
       tag: this.searchInput(),
       geo: this.selectedLocation(),
+      industry: this.selectedIndustry(),
     };
     return search;
   });
   public jobSearch$ = toObservable(this.jobSearch);
 
   constructor(private router: Router) {
+    addIcons({ globeOutline });
+
+    // Load available locations and industries
+    this.jobsService.getIndustries().subscribe({
+      next: (industries) => {
+        this.industries = industries;
+      },
+    });
     this.jobsService.getLocations().subscribe({
-      // handle the response
       next: (locations) => {
         this.locations = locations;
       },
-      // handle the error
-      error: (error) => {
-        // this.isLoading = false;
-        // this.error = error.status_message;
-      },
     });
-    console.log(this.selectedLocation);
-    // called everytime the signal value (selected location) changes
 
+    // update jobs list everytime the signal value changes
     this.jobSearch$
       .pipe(
         switchMap((search) => {
@@ -96,25 +120,4 @@ export class SearchPage {
         },
       });
   }
-
-  handleInput(event: any) {
-    const tag = event.target.value.toLowerCase();
-    this.jobsService.getJobs({ tag: tag }).subscribe({
-      // handle the response
-      next: (jobs) => {
-        // this.isLoading = false;
-        this.jobs = jobs;
-      },
-      // handle the error
-      error: (error) => {
-        // this.isLoading = false;
-        // this.error = error.status_message;
-      },
-    });
-  }
-
-  customPopoverOptions = {
-    header: 'Location',
-    subHeader: 'Select location',
-  };
 }

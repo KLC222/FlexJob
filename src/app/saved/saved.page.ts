@@ -10,11 +10,16 @@ import {
   IonThumbnail,
   IonItem,
   IonLabel,
+  IonIcon,
+  IonGrid,
+  IonCol,
 } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { JobsService } from '../services/jobs.service';
 import { Router, RouterModule } from '@angular/router';
 import { Job } from '../services/interfaces';
+import { addIcons } from 'ionicons';
+import { globeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-saved',
@@ -22,6 +27,8 @@ import { Job } from '../services/interfaces';
   styleUrls: ['saved.page.scss'],
   standalone: true,
   imports: [
+    IonGrid,
+    IonIcon,
     IonList,
     IonHeader,
     IonToolbar,
@@ -34,6 +41,7 @@ import { Job } from '../services/interfaces';
     IonItem,
     IonLabel,
     RouterModule,
+    IonCol,
   ],
 })
 export class SavedPage {
@@ -44,5 +52,6 @@ export class SavedPage {
     let savedJobs = this.jobsService.getSavedJobs();
     this.savedJobs = savedJobs;
     console.log(savedJobs);
+    addIcons({ globeOutline });
   }
 }

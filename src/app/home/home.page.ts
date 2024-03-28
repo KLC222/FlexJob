@@ -25,7 +25,11 @@ import { JobsService } from '../services/jobs.service';
 import { Job } from '../services/interfaces';
 import { Router, RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { globeOutline, bookmarkOutline } from 'ionicons/icons';
+import {
+  globeOutline,
+  bookmarkOutline,
+  chevronForwardOutline,
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-home',
@@ -65,7 +69,7 @@ export class HomePage {
 
   constructor(private router: Router) {
     this.loadLatestJobs();
-    addIcons({ globeOutline, bookmarkOutline });
+    addIcons({ globeOutline, bookmarkOutline, chevronForwardOutline });
   }
 
   loadLatestJobs() {

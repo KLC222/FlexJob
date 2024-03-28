@@ -7,6 +7,8 @@ import {
   Job,
   JobResults,
   JobSearch,
+  IndustryResults,
+  Industry,
 } from './interfaces';
 
 const baseUrl = 'https://jobicy.com/api/v2';
@@ -105,6 +107,22 @@ export class JobsService {
       .pipe(
         map((data) => {
           return data.locations;
+        })
+      );
+  }
+
+  getIndustries(): Observable<Array<Industry>> {
+    return this.http
+      .get<IndustryResults>(`${baseUrl}/remote-jobs?get=industries`)
+      .pipe(
+        map((data) => {
+          return data.industries.map((industry) => {
+            return {
+              ...industry,
+              // Replace HTML entities with their actual characters
+              industryName: industry.industryName.replace('&amp;', '&'),
+            };
+          });
         })
       );
   }

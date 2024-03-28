@@ -2,21 +2,38 @@
   <ion-toolbar>
     <ion-title> Job Search </ion-title>
   </ion-toolbar>
-  <ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
     <ion-searchbar
       [debounce]="1000"
       [ngModel]="searchInput()"
       (ngModelChange)="searchInput.set($event)"
     ></ion-searchbar>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
+  </ion-item>
+  <ion-item>
+    <!-- https://www.angulararchitects.io/en/blog/angular-signals-your-architecture-5-options/ -->
+    <ion-select
+      label="Industry"
+      [interfaceOptions]="industryPopoverOptions"
+      interface="popover"
+      placeholder="Select industry"
+      [ngModel]="selectedIndustry()"
+      (ngModelChange)="selectedIndustry.set($event)"
+    >
+      @for (industry of industries; track industry.industryID) {
+      <ion-select-option value="{{industry.industrySlug}}"
+        >{{industry.industryName}}</ion-select-option
+      >
+      }
+    </ion-select>
+  </ion-item>
   <ion-item>
     <!-- https://www.angulararchitects.io/en/blog/angular-signals-your-architecture-5-options/ -->
     <ion-select
       label="Location"
-      [interfaceOptions]="customPopoverOptions"
+      [interfaceOptions]="locationPopoverOptions"
       interface="popover"
       placeholder="Select location"
       [ngModel]="selectedLocation()"
@@ -29,11 +46,39 @@
       }
     </ion-select>
   </ion-item>
-  selected location: {{selectedLocation()}}
+  <ion-item>
+    <p>Showing results for: {{selectedLocation()}}</p>
+  </ion-item>
   <ion-list>
     @for (job of jobs; track job.id) {
+
+    <ion-grid>
+      <ion-item button [routerLink]="['/details', job.id]">
+        <!-- button [routerLink]=["'/details', job.id"] -->
+        <ion-col size="3">
+          <ion-thumbnail>
+            <img alt="Company logo" src="{{ job.companyLogo }}" />
+          </ion-thumbnail>
+        </ion-col>
+        <ion-col size="9">
+          <ion-label>
+            <h2>{{ job.jobTitle}}</h2>
+
+            <p>{{ job.companyName }}</p>
+            <br />
+            <p>
+              <ion-icon name="globe-outline"></ion-icon
+              ><strong>{{job.jobGeo}}</strong>
+            </p>
+          </ion-label>
+        </ion-col>
+      </ion-item>
+    </ion-grid>
+
+    }
+    <!-- @for (job of jobs; track job.id) {
     <ion-item button [routerLink]="['/details', job.id]">
-      <!-- button [routerLink]=["'/details', job.id"] -->
+   
       <ion-thumbnail>
         <img alt="Company logo" src="{{ job.companyLogo }}" />
       </ion-thumbnail>
@@ -44,6 +89,6 @@
 
       <ion-badge slot="end"> {{ job.jobGeo}}</ion-badge>
     </ion-item>
-    }
+    } -->
   </ion-list>
 </ion-content>
