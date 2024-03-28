@@ -17,11 +17,12 @@
     <ion-select
       label="Industry"
       [interfaceOptions]="industryPopoverOptions"
-      interface="popover"
+      interface="action-sheet"
       placeholder="Select industry"
       [ngModel]="selectedIndustry()"
       (ngModelChange)="selectedIndustry.set($event)"
     >
+      <ion-select-option value="">Any industry</ion-select-option>
       @for (industry of industries; track industry.industryID) {
       <ion-select-option value="{{industry.industrySlug}}"
         >{{industry.industryName}}</ion-select-option
@@ -34,11 +35,12 @@
     <ion-select
       label="Location"
       [interfaceOptions]="locationPopoverOptions"
-      interface="popover"
+      interface="action-sheet"
       placeholder="Select location"
       [ngModel]="selectedLocation()"
       (ngModelChange)="selectedLocation.set($event)"
     >
+      <ion-select-option value="">Anywhere</ion-select-option>
       @for (location of locations; track location.geoID) {
       <ion-select-option value="{{location.geoSlug}}"
         >{{location.geoName}}</ion-select-option

@@ -11,7 +11,7 @@ import { IonicModule } from '@ionic/angular';
 import { JobsService } from '../services/jobs.service';
 import { Job } from '../services/interfaces';
 import { addIcons } from 'ionicons';
-import { save, caretBack, bookmarkOutline } from 'ionicons/icons';
+import { save, caretBack, bookmark, bookmarkOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-details',
@@ -23,22 +23,21 @@ import { save, caretBack, bookmarkOutline } from 'ionicons/icons';
 export class DetailsPage {
   private jobsService = inject(JobsService);
   public job: WritableSignal<Job | null> = signal(null);
+  public bookmarkIcon: string = 'bookmark-outline';
 
   @Input()
   set id(jobId: string) {
     const job = this.jobsService.getJobDetails(parseInt(jobId));
-    console.log(job);
     this.job.set(job);
   }
 
   constructor() {
-    addIcons({ save, caretBack, bookmarkOutline });
-  }
+    addIcons({ save, caretBack, bookmark, bookmarkOutline });
 
-  showFullDescription = false;
-
-  toggleDescription() {
-    this.showFullDescription = !this.showFullDescription;
+    const job = this.job();
+    if (job && this.jobsService.isSaved(job)) {
+      this.bookmarkIcon = 'bookmark';
+    }
   }
 
   // goBack() {
@@ -48,5 +47,10 @@ export class DetailsPage {
   saveJob(job: Job) {
     // add the job to the saved jobs
     this.jobsService.saveJob(job);
+    this.bookmarkIcon = 'bookmark';
+  }
+
+  isSaved(job: Job): boolean {
+    return this.jobsService.isSaved(job);
   }
 }

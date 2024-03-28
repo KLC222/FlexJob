@@ -60,11 +60,11 @@ export class SearchPage {
   // Popover options
   locationPopoverOptions = {
     header: 'Location',
-    subHeader: 'Select location',
+    subHeader: 'Select one location',
   };
   industryPopoverOptions = {
     header: 'Industry',
-    subHeader: 'Select industry',
+    subHeader: 'Select one industry',
   };
   // Lists of jobs, locations, and industries
   public jobs: Array<Job> = [];

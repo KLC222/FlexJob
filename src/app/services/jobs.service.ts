@@ -61,6 +61,18 @@ export class JobsService {
     return null;
   }
 
+  isSaved(job: Job): boolean {
+    // get the saved jobs from the local storage
+    const savedJobsItem = localStorage.getItem('savedJobs');
+    let savedJobs: Array<Job> = [];
+    if (savedJobsItem) {
+      // parse the saved jobs from string to array of Job
+      savedJobs = JSON.parse(savedJobsItem);
+    }
+    // check if the job is in the saved jobs
+    return savedJobs.some((savedJob) => savedJob.id === job.id);
+  }
+
   saveJob(job: Job) {
     // get the saved jobs from the local storage
     const savedJobsItem = localStorage.getItem('savedJobs');
