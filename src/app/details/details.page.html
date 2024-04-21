@@ -1,11 +1,15 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-back-button slot="start" default-href="/"></ion-back-button>
-    <ion-title>{{job()?.jobTitle ?? "Job not found"}}</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title color="light"
+      >{{ job()?.jobTitle ?? "Job not found" }}</ion-title
+    >
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   @if (job(); as job) {
   <ion-card>
     <ion-card-header>
@@ -19,42 +23,40 @@
                   src="{{ job.companyLogo }}"
                 /> </ion-thumbnail
             ></ion-col>
-            <ion-col size="10">{{job.jobTitle}}</ion-col>
+            <ion-col size="10">{{ job.jobTitle }}</ion-col>
           </ion-row>
         </ion-grid>
       </ion-card-title>
-      <ion-card-subtitle>{{job.companyName}}</ion-card-subtitle>
+      <ion-card-subtitle>{{ job.companyName }}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>
       <ion-button class="save-button" fill="outline" (click)="saveJob(job)"
         >Save
-        <ion-icon size="small" slot="end" name="{{bookmarkIcon}}"></ion-icon
+        <ion-icon size="small" slot="end" name="{{ bookmarkIcon }}"></ion-icon
       ></ion-button>
       <p>Annural Salary:</p>
-      <ion-badge>
-        {{job.annualSalaryMin}} - {{job.annualSalaryMax}} {{job.salaryCurrency}}
+      <ion-badge class="badge_style">
+        {{ job.annualSalaryMin }} - {{ job.annualSalaryMax }} {{
+        job.salaryCurrency }}
       </ion-badge>
       <p>Job type:</p>
-      <ion-badge>{{job.jobType}}</ion-badge>
+      <ion-badge class="badge_style">{{ job.jobType }}</ion-badge>
       <p>Location:</p>
-      <ion-badge>{{job.jobGeo}}</ion-badge>
+      <ion-badge class="badge_style">{{ job.jobGeo }}</ion-badge>
 
-      <p class="ion-padding-bottom">Posted: {{job.pubDate}}</p>
+      <p class="ion-padding-bottom">Posted: {{ job.pubDate }}</p>
 
       <h2 class="boldText">Job details</h2>
-      <div class="job-description" [innerHTML]="job.jobDescription"></div>
-      <!-- <p>Company webpage:</p>
-      <ion-button href="{{job.url}}" target="_blank" rel="noopener noreferrer"
-        >Company webpage</ion-button
-      > -->
-
-      <!-- <ion-button>
-        <ion-icon name="save" slot="start"></ion-icon>
-        Save
-      </ion-button> -->
-
-      <!-- <div [innerHTML]="job.jobDescription"></div> -->
+      <div
+        class="job-description ion-padding-bottom"
+        [innerHTML]="job.jobDescription"
+      ></div>
+      <ion-button
+        class="ion-padding ion-margin-bottom badge_style"
+        (click)="openBrowser()"
+        >Open in browser&nbsp;<ion-icon name="open-outline"></ion-icon
+      ></ion-button>
     </ion-card-content>
   </ion-card>
   }

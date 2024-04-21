@@ -30,6 +30,7 @@ import {
   bookmarkOutline,
   chevronForwardOutline,
 } from 'ionicons/icons';
+import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
   selector: 'app-home',
@@ -63,29 +64,28 @@ import {
 export class HomePage {
   // inject JobsService
   private jobsService = inject(JobsService);
-  private error = null;
-  private isLoading = false;
+  // Creating the list of jobs
   public jobs: Array<Job> = [];
 
   constructor(private router: Router) {
+    // call to immediately load the latest jobs
     this.loadLatestJobs();
     addIcons({ globeOutline, bookmarkOutline, chevronForwardOutline });
+    // Set the status bar to dark
+    StatusBar.setStyle({ style: Style.Dark });
   }
 
+  // Load the latest jobs
   loadLatestJobs() {
-    // set isLoading to true
-    this.isLoading = true;
-
-    this.jobsService.getJobs({ tag: 'php' }).subscribe({
+    // subscribe to the jobs service
+    this.jobsService.getJobs().subscribe({
       // handle the response
       next: (jobs) => {
-        this.isLoading = false;
         this.jobs = jobs;
       },
       // handle the error
       error: (error) => {
-        this.isLoading = false;
-        this.error = error.status_message;
+        console.log(error);
       },
     });
   }

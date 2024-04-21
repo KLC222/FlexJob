@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title> Job Search </ion-title>
+  <ion-toolbar color="primary">
+    <ion-title color="light"> Job Search </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -49,7 +49,7 @@
     </ion-select>
   </ion-item>
   <ion-item>
-    <p>Showing results for: {{selectedLocation()}}</p>
+    <p>Showing results for: {{selectedLocation()}} {{selectedIndustry()}}</p>
   </ion-item>
   <ion-list>
     @for (job of jobs; track job.id) {

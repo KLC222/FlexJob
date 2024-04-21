@@ -1,4 +1,5 @@
 // https://transform.tools/json-to-typescript
+// Define all the types for the API response
 export interface IndustryResults {
   industries: Industry[];
 }

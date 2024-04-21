@@ -74,6 +74,7 @@ export class SearchPage {
   public selectedLocation = signal<string>('');
   public selectedIndustry = signal<string>('');
   public searchInput = signal<string>('');
+  // make jobSearch a computed value of the searchInput, selectedLocation, and selectedIndustry
   public jobSearch = computed(() => {
     const search: JobSearch = {
       tag: this.searchInput(),
@@ -82,6 +83,7 @@ export class SearchPage {
     };
     return search;
   });
+  // convert the signal to an observable so we can subscribe to it
   public jobSearch$ = toObservable(this.jobSearch);
 
   constructor(private router: Router) {
@@ -102,6 +104,7 @@ export class SearchPage {
     // update jobs list everytime the signal value changes
     this.jobSearch$
       .pipe(
+        //switchMap to get the last value of the signal
         switchMap((search) => {
           console.log('search', search);
           return this.jobsService.getJobs(search);
@@ -111,6 +114,7 @@ export class SearchPage {
         // handle the response
         next: (jobs) => {
           console.log('jobs results', jobs);
+          // Update the jobs list
           this.jobs = jobs;
         },
         // handle the error
