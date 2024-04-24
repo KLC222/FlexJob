@@ -17,9 +17,11 @@ import {
   bookmark,
   bookmarkOutline,
   openOutline,
+  shareSocialOutline,
 } from 'ionicons/icons';
 import { Browser } from '@capacitor/browser';
 import { Toast } from '@capacitor/toast';
+import { Share } from '@capacitor/share';
 
 @Component({
   selector: 'app-details',
@@ -50,7 +52,14 @@ export class DetailsPage {
   }
 
   constructor() {
-    addIcons({ save, caretBack, bookmark, bookmarkOutline, openOutline });
+    addIcons({
+      save,
+      caretBack,
+      bookmark,
+      bookmarkOutline,
+      openOutline,
+      shareSocialOutline,
+    });
   }
 
   // save or remove the job from the saved list when the bookmark icon is clicked
@@ -79,6 +88,20 @@ export class DetailsPage {
     if (job_url) {
       // open the job URL in the browser
       await Browser.open({ url: job_url });
+    }
+  }
+
+  // Share the job URL
+  async shareJob() {
+    // get the job URL
+    const job_url = this.job()?.url;
+    if (job_url) {
+      // share the job URL
+      await Share.share({
+        title: 'Check out this job!',
+        text: 'I found this job and thought you might be interested!',
+        url: job_url,
+      });
     }
   }
 }

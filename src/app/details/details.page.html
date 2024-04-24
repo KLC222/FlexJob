@@ -3,13 +3,18 @@
     <ion-buttons slot="start">
       <ion-back-button color="light" defaultHref="/"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="light" (click)="shareJob()">
+        <ion-icon name="share-social-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title color="light"
       >{{ job()?.jobTitle ?? "Job not found" }}</ion-title
     >
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
   @if (job(); as job) {
   <ion-card>
     <ion-card-header>
@@ -36,7 +41,7 @@
         <ion-icon size="small" slot="end" name="{{ bookmarkIcon }}"></ion-icon
       ></ion-button>
       <p>Annural Salary:</p>
-      <ion-badge class="badge_style">
+      <ion-badge class="badge_style md">
         {{ job.annualSalaryMin }} - {{ job.annualSalaryMax }} {{
         job.salaryCurrency }}
       </ion-badge>
@@ -46,15 +51,12 @@
       <ion-badge class="badge_style">{{ job.jobGeo }}</ion-badge>
 
       <p class="ion-padding-bottom">Posted: {{ job.pubDate }}</p>
-
       <h2 class="boldText">Job details</h2>
       <div
         class="job-description ion-padding-bottom"
         [innerHTML]="job.jobDescription"
       ></div>
-      <ion-button
-        class="ion-padding ion-margin-bottom badge_style"
-        (click)="openBrowser()"
+      <ion-button class="padding_all badge_style" (click)="openBrowser()"
         >Open in browser&nbsp;<ion-icon name="open-outline"></ion-icon
       ></ion-button>
     </ion-card-content>

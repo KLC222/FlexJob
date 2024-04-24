@@ -23,6 +23,7 @@ export class JobsService {
 
   constructor(private storage: StorageService) {}
 
+  // get a list of jobs from the API and store them in the storage
   getJobs(search: JobSearch = {}): Observable<Array<Job>> {
     // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
     const searchParams = new URLSearchParams();
@@ -38,15 +39,15 @@ export class JobsService {
     return this.http.get<JobResults>(url).pipe(
       // use mergeMap to return the list of jobs instead of the promise
       mergeMap(async (data) => {
-        // store the jobs in the local storage
-        await this.saveJobsList(data.jobs);
+        // store the jobs in the storage
+        await this.storeJobsList(data.jobs);
         return data.jobs;
       })
     );
   }
 
-  // Save new jobs without erasing the existing ones
-  async saveJobsList(jobs: Array<Job>) {
+  // Store new jobs without erasing the existing ones
+  async storeJobsList(jobs: Array<Job>) {
     // store the jobs in the local storage
     const existingJobs = await this.storage.get('jobs');
     // merge the existing jobs with the new jobs

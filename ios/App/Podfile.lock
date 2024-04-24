@@ -14,6 +14,8 @@ PODS:
     - Capacitor
   - CapacitorKeyboard (5.0.8):
     - Capacitor
+  - CapacitorShare (5.0.7):
+    - Capacitor
   - CapacitorStatusBar (5.0.7):
     - Capacitor
   - CapacitorToast (5.0.7):
@@ -53,6 +55,7 @@ DEPENDENCIES:
   - "CapacitorGoogleMaps (from `../../node_modules/@capacitor/google-maps`)"
   - "CapacitorHaptics (from `../../node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../node_modules/@capacitor/keyboard`)"
+  - "CapacitorShare (from `../../node_modules/@capacitor/share`)"
   - "CapacitorStatusBar (from `../../node_modules/@capacitor/status-bar`)"
   - "CapacitorToast (from `../../node_modules/@capacitor/toast`)"
   - CordovaPlugins (from `../capacitor-cordova-ios-plugins`)
@@ -77,6 +80,8 @@ EXTERNAL SOURCES:
     :path: "../../node_modules/@capacitor/haptics"
   CapacitorKeyboard:
     :path: "../../node_modules/@capacitor/keyboard"
+  CapacitorShare:
+    :path: "../../node_modules/@capacitor/share"
   CapacitorStatusBar:
     :path: "../../node_modules/@capacitor/status-bar"
   CapacitorToast:
@@ -92,12 +97,13 @@ SPEC CHECKSUMS:
   CapacitorGoogleMaps: 7764613bb8eab28f290c1ca76b6ff4ee32d3c50f
   CapacitorHaptics: 7c7c206f0c96a628fed073830c96d28c4b2e772e
   CapacitorKeyboard: aec619a578235c6ce279075009a2689c2cf5c42c
+  CapacitorShare: c6a1ebbf0114ff9e863b966cd6052678fa25d480
   CapacitorStatusBar: f390fbb49b82ffb754ea4b3cf71dc8b048baf3e7
   CapacitorToast: c8bb89eeb59a23c1fc298f138cc06c8ff4d90ac1
   CordovaPlugins: a17fcaee819862ac7aca195699992de19cf191d4
   Google-Maps-iOS-Utils: f77eab4c4326d7e6a277f8e23a0232402731913a
   GoogleMaps: 032f676450ba0779bd8ce16840690915f84e57ac
 
-PODFILE CHECKSUM: 66fbc76466bd4f9f9cbb2fe311d84f1d63a43378
+PODFILE CHECKSUM: 8bd048cba0429cff7b8056ae26aec486f407f8d8
 
 COCOAPODS: 1.15.2
