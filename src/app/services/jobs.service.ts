@@ -103,7 +103,7 @@ export class JobsService {
     const savedJobs = await this.getSavedJobs();
     // add the job to the saved jobs
     savedJobs.push(job);
-    // store the saved jobs in the local storage
+    // store the saved jobs in the storage
     await this.storage.set('savedJobs', savedJobs);
   }
 

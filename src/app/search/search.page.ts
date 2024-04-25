@@ -16,6 +16,7 @@ import {
   IonCol,
   IonGrid,
   IonIcon,
+  IonProgressBar,
 } from '@ionic/angular/standalone';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 import { JobsService } from '../services/jobs.service';
@@ -33,6 +34,7 @@ import { globeOutline } from 'ionicons/icons';
   styleUrls: ['search.page.scss'],
   standalone: true,
   imports: [
+    IonProgressBar,
     IonIcon,
     IonCol,
     IonLabel,
@@ -85,6 +87,7 @@ export class SearchPage {
   });
   // convert the signal to an observable so we can subscribe to it
   public jobSearch$ = toObservable(this.jobSearch);
+  public loading = false;
 
   constructor(private router: Router) {
     addIcons({ globeOutline });
@@ -106,6 +109,7 @@ export class SearchPage {
       .pipe(
         //switchMap to get the last value of the signal
         switchMap((search) => {
+          this.loading = true;
           console.log('search', search);
           return this.jobsService.getJobs(search);
         })
@@ -115,12 +119,13 @@ export class SearchPage {
         next: (jobs) => {
           console.log('jobs results', jobs);
           // Update the jobs list
+          this.loading = false;
           this.jobs = jobs;
         },
         // handle the error
         error: (error) => {
-          // this.isLoading = false;
-          // this.error = error.status_message;
+          this.loading = false;
+          console.warn(error);
         },
       });
   }
